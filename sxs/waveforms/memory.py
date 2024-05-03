@@ -106,13 +106,14 @@ def 𝔇inverseLaplacianinverse(h_mts):
     return h
 
 
-def mass_aspect(Psi2, h):
+def mass_aspect(Psi2, h, st_psi):
     h = MTS(h)
     Psi2 = MTS(Psi2)
-    return - (Psi2 + 0.25 * h.dot * h.bar).re
+    st_psi = MTS(st_psi)
+    return - (Psi2 + 0.25 * h.dot * h.bar + 4 * np.pi/3*st_psi*st_psi.dot).re
 
 
-def J_m(h, Psi2):
+def J_m(h, Psi2, st_psi):
     """Bondi mass aspect contribution to electric part of strain
 
     Calculated according to Eq. (17a) of 'Adding Gravitational Memory to Waveform
@@ -133,7 +134,8 @@ def J_m(h, Psi2):
     """
     h = MTS(h)
     Psi2 = MTS(Psi2)
-    m = mass_aspect(Psi2, h)
+    st_psi = MTS(st_psi)
+    m = mass_aspect(Psi2, h, st_psi)
     J_m = 0.5 * 𝔇inverse(m).ethbar.ethbar
 
     return J_m
