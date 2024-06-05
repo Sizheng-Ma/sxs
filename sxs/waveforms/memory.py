@@ -141,6 +141,62 @@ def J_m(h, Psi2, st_psi):
     return J_m
 
 
+def J_tensor_m(h, Psi2, st_psi):
+    """Bondi mass aspect contribution to electric part of strain
+
+    Calculated according to Eq. (17a) of 'Adding Gravitational Memory to Waveform
+    Catalogs using BMS Balance Laws'
+
+    Parameters
+    ----------
+    h : WaveformModes
+        WaveformModes object corresponding to the strain
+    Psi2 : WaveformModes
+        WaveformModes object corresponding to Psi2
+
+    Returns
+    -------
+    J_m : WaveformModes
+        Bondi mass aspect contribution to the strain
+
+    """
+    h = MTS(h)
+    Psi2 = MTS(Psi2)
+    st_psi = MTS(st_psi)
+    m = -(Psi2 + 0.25 * h.dot * h.bar).re
+    J_m = 0.5 * 𝔇inverse(m).ethbar.ethbar
+
+    return J_m
+
+
+def J_scalar_m(h, Psi2, st_psi):
+    """Bondi mass aspect contribution to electric part of strain
+
+    Calculated according to Eq. (17a) of 'Adding Gravitational Memory to Waveform
+    Catalogs using BMS Balance Laws'
+
+    Parameters
+    ----------
+    h : WaveformModes
+        WaveformModes object corresponding to the strain
+    Psi2 : WaveformModes
+        WaveformModes object corresponding to Psi2
+
+    Returns
+    -------
+    J_m : WaveformModes
+        Bondi mass aspect contribution to the strain
+
+    """
+    h = MTS(h)
+    Psi2 = MTS(Psi2)
+    st_psi = MTS(st_psi)
+    m = -(4 * np.pi / 3 * st_psi * st_psi.dot).re
+    J_m = 0.5 * 𝔇inverse(m).ethbar.ethbar
+
+    return J_m
+
+
 def J_E(h, integration_start_time=None):
     """Energy flux contribution to electric part of strain
 
